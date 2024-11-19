@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Calendar, Syringe, Bell } from 'lucide-react';
 import type { Vaccine } from './VaccineManager';
+import { UserProfile } from '@auth0/nextjs-auth0/client';
 
 interface VaccineFormProps {
   onSubmit: (vaccine: Omit<Vaccine, 'id'>) => void;

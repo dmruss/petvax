@@ -14,7 +14,7 @@ export function Navbar() {
     };
   
     try {
-      const response = fetch('/api/user', {
+      const response = fetch('/api/protected/user', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
