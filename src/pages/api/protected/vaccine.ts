@@ -26,12 +26,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       console.log('more than one query param')
     }
     else {
-      console.log(`PARAMNAME: ${paramName}`);
-      console.log(`paranname email: ${paramName.email}`);
-      data = await getVaccines(paramName.email as string);
-      console.log(`GET VACCINES data: ${data}`);
-      console.log(data);
-      
+      if (paramName.email) {
+        console.log(`PARAMNAME: ${paramName}`);
+        console.log(`paranname email: ${paramName.email}`);
+        if (paramName.email.includes(' ')) {
+          paramName.email = (paramName.email as string).replace(/ /g, '+');
+        }
+        data = await getVaccines(paramName.email as string);
+        console.log(`GET VACCINES data: ${data}`);
+        console.log(data);
+    }
     }
     res.status(200).json(data);
   }
