@@ -3,11 +3,11 @@ const pg = require('pg')
 
 // Create a connection pool
 let pool = new pg.Pool({
-  user: 'postgres',
-  host: 'feverishly-undamaged-remora.data-1.use1.tembo.io',
-  database: 'petvax',
-  password: 'CalRbj919BTv7MVe',
-  port: 5432,
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
   ssl: {
     rejectUnauthorized: false
 }
