@@ -50,7 +50,7 @@ export function Navbar() {
               user ? (
                 <div className="flex items-center space-x-4">
                   <span className="text-sm text-gray-700">
-                    Welcome, {user.name}, {user.email}
+                    Welcome, {user.email}
                   </span>
                   <a
                     href="/api/auth/logout"
