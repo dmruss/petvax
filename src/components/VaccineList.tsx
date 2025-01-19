@@ -12,7 +12,10 @@ interface VaccineListProps {
 export function VaccineList({ vaccines, onDelete }: VaccineListProps) {
   return (
     <div className="space-y-4">
-      {vaccines.map((vaccine) => (
+      {vaccines.map((vaccine) => {
+        console.log('Vaccine ID:', vaccine.id); // Log the vaccine ID here
+        console.log('Vaccine Object:', vaccine); // Optionally log the full vaccine object
+        return (
         <div
           key={vaccine.id}
           className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
@@ -72,7 +75,11 @@ export function VaccineList({ vaccines, onDelete }: VaccineListProps) {
             </div>
           </div>
         </div>
-      ))}
+      )
+    }
+      
+      )}
+      
     </div>
   );
 }

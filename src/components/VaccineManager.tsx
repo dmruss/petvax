@@ -96,11 +96,40 @@ export function VaccineManager() {
     toast.success('Vaccine record added successfully!');
   };
 
-  const handleDeleteVaccine = (id: string) => {
-    setVaccines(vaccines.filter((v) => v.id !== id));
-    toast.success('Vaccine record deleted successfully!');
+  const handleDeleteVaccine = async (id: string) => {
+    if (!user || !user.email) {
+      toast.error('Unable to delete vaccine. User email is missing.');
+      return;
+    }
+  
+    try {
+      // Make DELETE request to the server
+      const response = await fetch('/api/protected/vaccine', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: user.email,
+          id: id,
+        }),
+      });
+  
+      if (response.ok) {
+        // Update the local state to remove the deleted vaccine
+        setVaccines(vaccines.filter((v) => v.id !== id));
+        toast.success('Vaccine record deleted successfully!');
+      } else {
+        const errorData = await response.json();
+        console.error('Error deleting vaccine:', errorData);
+        toast.error('Failed to delete vaccine record.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      toast.error('An error occurred while deleting the vaccine record.');
+    }
   };
-
+  
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
@@ -113,6 +142,7 @@ export function VaccineManager() {
     return <WelcomeScreen />;
   }
 
+  console.log('VaccinesList: ', vaccines);
   return (
     <div className="space-y-8">
       <div className="bg-white rounded-lg shadow-sm p-6">

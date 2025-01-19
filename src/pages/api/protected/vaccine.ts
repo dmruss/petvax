@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { insertVaccine, upsertUser, getVaccines } from '../../../lib/pgInterface';
+import { insertVaccine, upsertUser, getVaccines, deleteVaccine } from '../../../lib/pgInterface';
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -32,6 +32,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       
     }
     res.status(200).json(data);
+  }
+  else if (req.method == 'DELETE') {
+    try {  
+      console.log(`vaccine: ${req.body.email}, ${req.body.id}`)
+      await deleteVaccine(req.body.email, req.body.id);
+      res.status(200).json({ message: 'Vaccine record deleted successfully' });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: 'Failed to delete vaccine record' });
+    }    
   }
   else {
     res.status(405).json({ error: 'Method not allowed' });

@@ -17,6 +17,7 @@ type OriginalObject = {
   
   // Define the mapping between old keys and new keys
   const keyMapping: Record<string, keyof MappedObject> = {
+    id: "id",
     name: "name",
     date_admin: "dateAdministered",
     date_next: "nextDueDate",

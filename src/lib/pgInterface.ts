@@ -135,3 +135,40 @@ const getUserIdWithEmail = async (user_email: string): Promise<string|undefined>
 export const closePool = async (): Promise<void> => {
   await pool.end();
 };
+
+export const deleteVaccine = async (user_email: string, vaccineId: string): Promise<void> => {
+  let client, user_id;
+  try {
+    client = await pool.connect();
+    console.log('connected to database');
+  } catch (error) {
+    console.log('Error connecting to the database:', error);
+    throw error;
+  }
+
+  try {
+    // Retrieve the user ID associated with the email
+    const idQuery = 'SELECT id FROM app.users WHERE email = $1';
+    const idResult = await client.query(idQuery, [user_email]);
+    if (idResult.rows.length > 0) {
+      user_id = idResult.rows[0].id;
+    } else {
+      throw new Error('User does not exist');
+    }
+
+    // Delete the vaccine associated with the user and vaccine id
+    const deleteQuery = 'DELETE FROM app.vaccineform WHERE user_id = $1 AND id = $2';
+    const deleteResult = await client.query(deleteQuery, [user_id, vaccineId]);
+
+    if (deleteResult.rowCount > 0) {
+      console.log(`Vaccine "${vaccineId}" deleted for user ID: ${user_id}`);
+    } else {
+      console.log(`No vaccine record found for id "${vaccineId}" and user ID: ${user_id}`);
+    }
+  } catch (error) {
+    console.error('Error deleting vaccine:', error);
+    throw error;
+  } finally {
+    client.release();
+  }
+};

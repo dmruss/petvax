@@ -31,7 +31,7 @@ function App() {
     setVaccines(vaccines.filter((v) => v.id !== id));
     toast.success('Vaccine record deleted successfully!');
   };
-
+  console.log('VaccinesList: ', vaccines);
   return (
     <div className="min-h-screen bg-gray-50">
       <Toaster position="top-right" />
