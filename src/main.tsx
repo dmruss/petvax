@@ -1,6 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { Auth0Provider } from '@auth0/auth0-react';
+import { Auth0Provider } from 'auth0/nextjs-auth0';
 import App from './App';
 import './index.css';
 
