@@ -26,8 +26,8 @@ export function VaccineManager() {
 
   useEffect(() => {
     // Simulate fetching data on page load
-    let response;
-    if (user) {
+    let response: Response;
+    if (user && user.email) {
       const fetchData = async () => {
         try {
           response = await fetch(`/api/protected/vaccine?email=${user.email}`, {
@@ -58,6 +58,10 @@ export function VaccineManager() {
   
   
   const handleAddVaccine = (vaccineData: Omit<Vaccine, 'id'>) => {
+    if (!user || !user.email) {
+      toast.error('Unable to add vaccine. User email is missing.');
+      return;
+    }    
     const newVaccine = {
       ...vaccineData,
       id: crypto.randomUUID(),

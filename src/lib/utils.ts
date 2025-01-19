@@ -10,6 +10,9 @@ type OriginalObject = {
     name: string;
     dateAdministered: string;
     nextDueDate: string;
+    id: string; 
+    notificationEmail: string; 
+    notificationPhone: string;
   };
   
   // Define the mapping between old keys and new keys
