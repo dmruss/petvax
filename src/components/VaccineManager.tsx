@@ -57,16 +57,12 @@ export function VaccineManager() {
   }, [user]); // Empty dependency array ensures this runs only once on component mount
   
   
-  const handleAddVaccine = (vaccineData: Omit<Vaccine, 'id'>) => {
+  const handleAddVaccine = async (vaccineData: Omit<Vaccine, 'id'>) => {
     if (!user || !user.email) {
       toast.error('Unable to add vaccine. User email is missing.');
       return;
     }    
-    const newVaccine = {
-      ...vaccineData,
-      id: crypto.randomUUID(),
-    };
-    setVaccines([...vaccines, newVaccine]);
+
 
    
     const vaccineFormData = {
@@ -78,18 +74,35 @@ export function VaccineManager() {
       userEmail: user.email
     };
   
+    let newVaccine;
+
     try {
-      const response = fetch('/api/protected/vaccine', {
+      const response = await fetch('/api/protected/vaccine', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(vaccineFormData),
       });
-  
+      if (!response.ok) {
+        throw new Error('Failed to add vaccine record');
+      }
+          // Parse the response to get the vaccine ID
+      const responseBody = await response.json();
+      const newId = responseBody?.response[0]?.id;
+      if (!newId) {
+        throw new Error('Invalid response: ID not found');
+      }
+      newVaccine = {
+        ...vaccineData,
+        id: newId,
+      };
+      setVaccines([...vaccines, newVaccine]);
+
     } catch (error) {
       console.error('Error:', error);
     }
+
   
     
 

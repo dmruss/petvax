@@ -78,6 +78,10 @@ export const insertVaccine = async (user_email: string, name: string, dateAdmini
     await client.query(insertQuery, [user_id, name, dateAdministered, nextDueDate]);
     console.log('Vaccine inserted:', { user_id, name, dateAdministered, nextDueDate });
     
+    const selectQuery = "select id from app.vaccineform where user_id = $1 and name = $2 and date_admin = $3 and date_next = $4";
+    let response = await client.query(selectQuery, [user_id, name, dateAdministered, nextDueDate ]);
+    return response.rows;
+
     //todo insert notification info
 
     // Commit the transaction

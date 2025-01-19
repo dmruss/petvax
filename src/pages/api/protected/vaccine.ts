@@ -7,8 +7,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     try {  
       console.log(`vaccine: ${req.body.userEmail}, ${req.body.name}, ${req.body.dateAdministered}, ${req.body.nextDueDate}, ${req.body.notificationEmail}, ${req.body.notificationPhone}`)
-      await insertVaccine(req.body.userEmail, req.body.name, req.body.dateAdministered, req.body.nextDueDate, req.body.notificationEmail, req.body.notificationPhone);
-      res.status(200).json({ message: 'Notification inserted successfully' });
+      let response = await insertVaccine(req.body.userEmail, req.body.name, req.body.dateAdministered, req.body.nextDueDate, req.body.notificationEmail, req.body.notificationPhone);
+      res.status(200).json({
+         message: 'Notification inserted successfully',
+         response: response });
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: 'Failed to insert notification' });
