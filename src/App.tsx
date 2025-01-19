@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth0 } from '@auth0/nextjs-auth0';
+import { useAuth0 } from '@auth0/auth0-react';
 import { Toaster, toast } from 'react-hot-toast';
 import { Shield, LogOut, LogIn } from 'lucide-react';
 import { VaccineForm } from './components/VaccineForm';
