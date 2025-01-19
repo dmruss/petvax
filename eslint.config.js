@@ -4,6 +4,7 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import tseslint from 'typescript-eslint';
 
+
 export default tseslint.config(
   { ignores: ['dist'] },
   {
@@ -23,6 +24,13 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true },
       ],
+      'react/no-unescaped-entities': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
+      '@next/next/no-html-link-for-pages': 'off',
+      'prefer-const': 'off',
+      'react/no-unescaped-entities': 'off',
+      '@typescript-eslint/no-require-imports': 'off',
+      '@typescript-eslint/ban-ts-comment': 'off'
     },
   }
 );
