@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { insertVaccine, upsertUser, getVaccines } from '../../../lib/pgInterface';
 
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {  
 
@@ -25,7 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     else {
       console.log(`PARAMNAME: ${paramName}`);
       console.log(`paranname email: ${paramName.email}`);
-      data = await getVaccines(paramName.email);
+      data = await getVaccines(paramName.email as string);
       console.log(`GET VACCINES data: ${data}`);
       console.log(data);
       
